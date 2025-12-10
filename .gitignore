@@ -1,4 +1,6 @@
-./correctedIIc
+/correctedIIc
+/.venv
+/.idea
 ga_8_queens_lab.ipynb
 Genetic Algorithms (slides).pdf
 Genetic Algorithms Project.pdf

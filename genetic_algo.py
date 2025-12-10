@@ -113,11 +113,11 @@ if __name__ == "__main__":
     # Single run with verbose output
     print("\n--- Single Run Test ---")
     best_solution, best_fit, final_gen = genetic_algorithm(
-        pop_size=50,
-        max_generations=50,
+        pop_size=200,
+        max_generations=200,
         crossover_prob=0.8,
         mutation_prob=0.005,
-        tournament_k=50,
+        tournament_k=30,
         verbose=True
     )
 

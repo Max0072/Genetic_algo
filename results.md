@@ -183,3 +183,120 @@ Best params, more time         18.75      18.75      5.0
   Best configuration: Best params, more time
    Average penalty: 18.75
    Average conflicts: 5.0
+
+
+============================================================
+ANALYSIS & CONCLUSIONS
+============================================================
+
+1. Impact of Mutation Rate
+----------------------------
+The mutation rate has the STRONGEST impact on solution quality:
+
+• High mutation (0.15): WORST results (penalty 28.18, 364.6 conflicts)
+  → Too much disruption prevents convergence
+  → Good building blocks are destroyed before exploitation
+
+• Baseline mutation (0.05): Moderate results (penalty 25.85, 209 conflicts)
+  → Reasonable exploration-exploitation balance
+
+• Low mutation (0.02): IMPROVED results (penalty 23.60, 91.6 conflicts)
+  → Better preservation of good solutions
+  → Still enough diversity to escape local optima
+
+• Very low mutation (0.005): BEST results (penalty 19.57, 13.4 conflicts)
+  → Minimal disruption allows fine-tuning of solutions
+  → Sufficient exploration from crossover and selection pressure
+
+• Too low mutation (0.001): Slightly worse (penalty 23.71, 83.8 conflicts)
+  → Insufficient diversity, possible premature convergence
+
+CONCLUSION: For timetabling problems, very low mutation rates (0.005)
+work best when combined with strong selection pressure. The crossover
+operator provides sufficient exploration.
+
+
+2. Impact of Population Size
+------------------------------
+• Baseline (100): penalty 25.85, conflicts 209.0
+• Large (200): penalty 25.88, conflicts 202.6
+
+FINDING: Doubling population size alone provides MINIMAL improvement:
+  → Only 3.4% reduction in conflicts
+  → No improvement in average penalty
+  → 2x computational cost
+
+CONCLUSION: Population size has diminishing returns when used in isolation.
+More effective when combined with other parameter changes (see "Best parameters").
+
+
+3. Impact of Generations (Time Budget)
+---------------------------------------
+• Baseline (100 gen): penalty 25.85
+• Extended (200 gen): penalty 24.81
+• Best params (200 gen): penalty 19.57
+• Best params (300 gen): penalty 18.75
+
+FINDINGS:
+  → Doubling generations alone: 4% improvement (baseline → extended)
+  → With optimized parameters: 24% improvement (baseline → best 200 gen)
+  → Extended time + optimized params: 27% improvement (baseline → best 300 gen)
+
+CONCLUSION: Additional generations help, but proper parameter tuning
+is far more important. The algorithm benefits from extended runtime
+only when other parameters are well-tuned.
+
+
+4. Impact of Selection Pressure
+--------------------------------
+• Baseline (k=5): penalty 25.85, conflicts 209.0
+• Strong selection (k=10): penalty 25.11, conflicts 169.2
+• Best params (k=30): penalty 19.57, conflicts 13.4
+
+FINDINGS:
+  → Tournament size k=5: Weak selection pressure
+  → Tournament size k=10: 2.9% improvement, 19% fewer conflicts
+  → Tournament size k=30: 24% improvement, 93% fewer conflicts
+
+CONCLUSION: High selection pressure (large tournament size) is crucial
+for timetabling. Strong selection combined with low mutation allows
+best individuals to dominate while maintaining solution quality.
+
+
+5. Interaction Effects
+-----------------------
+The BEST configuration combines:
+  • Large population (200-300)
+  • Very low mutation (0.005)
+  • High selection pressure (k=30-50)
+  • Extended generations (200-300)
+
+This combination achieves:
+  ✓ 27% improvement over baseline (25.85 → 18.75)
+  ✓ 97.6% reduction in conflicts (209 → 5)
+  ✓ Near-satisfaction of hard constraints
+
+KEY INSIGHT: Parameters have synergistic effects. Low mutation ONLY works
+well with strong selection pressure. Large populations ONLY help when
+combined with proper mutation rates and selection.
+
+
+6. Hard Constraint Satisfaction
+--------------------------------
+Progress on same-slot conflicts (distance=0):
+
+  Baseline:           209 conflicts (UNACCEPTABLE)
+  Low mutation:        91.6 conflicts (poor)
+  Very low mutation:   50.4 conflicts (moderate)
+  Best parameters:     13.4 conflicts (good)
+  Best + more time:     5.0 conflicts (near-optimal)
+
+CONCLUSION: Hard constraints are nearly satisfied with optimal parameters.
+The remaining 5 conflicts could be eliminated with:
+  • Repair operators (enforce hard constraints)
+  • Higher penalty for distance=0 conflicts
+  • Local search refinement
+
+============================================================
+END OF ANALYSIS
+============================================================

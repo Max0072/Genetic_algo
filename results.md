@@ -292,10 +292,7 @@ Progress on same-slot conflicts (distance=0):
   Best + more time:     5.0 conflicts (near-optimal)
 
 CONCLUSION: Hard constraints are nearly satisfied with optimal parameters.
-The remaining 5 conflicts could be eliminated with:
-  • Repair operators (enforce hard constraints)
-  • Higher penalty for distance=0 conflicts
-  • Local search refinement
+
 
 ============================================================
 END OF ANALYSIS
